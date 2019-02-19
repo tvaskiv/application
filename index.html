@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CUSTOM GOOGLE FORM</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div class="form-group application-form-group">
+	    <form id="apply-form" action="https://docs.google.com/forms/d/e/1FAIpQLSfHc-yAEyPSYYhQprifMy8CdOgSx0BHIWqBJ1svUApF0DP2AA/formResponse" method="POST" target="no-target">
+
+			<div class="form-check form-check-inline-appl d-flex justify-content-between flex-wrap">
+				<input class="form-check-input" type="radio" name="entry.312930095" id="summer" value="summer">
+				<label class="form-check-label col-xs-5 col-sm-2" for="summer">Summer program</label>
+				<input class="form-check-input" type="radio" name="entry.312930095" id="spring" value="spring">
+				<label class="form-check-label col-xs-5 col-sm-2" for="spring">Spring program</label>
+				<input class="form-check-input" type="radio" name="entry.312930095" id="fall" value="fall">
+				<label class="form-check-label col-xs-5 col-sm-2" for="fall">Fall program</label>
+				<input class="form-check-input" type="radio" name="entry.312930095" id="online" value="online">
+				<label class="form-check-label col-xs-5 col-sm-2" for="online">Online courses</label>
+				<input class="form-check-input" type="radio" name="entry.312930095" id="individual" value="individual">
+				<label class="form-check-label col-xs-5 col-sm-2" for="individual">Individual courses</label>
+			</div>
+			
+			
+
+	        <input type="text" id="fname-appl-form" name="entry.1537731664" class="form-control" placeholder="First Name *Required field" required>
+	        <input type="text" id="lname-appl-form" name="entry.795905714" class="form-control" placeholder="Last Name *Required field" required>
+
+	        <input type="email" id="email-contact-form" name="entry.599964900" class="form-control" placeholder="Email *Required field" required>
+
+	        <p id="email-warning">You have to enter valid email address</p>
+	        <button id="submit-application-form" type="button" class="btn btn-outline-* btn-block">SEND</button>
+	    </form>
+	    <p id="input-feedback"></p>
+	    <iframe src="#" id="no-target" name="no-target" style="visibility:hidden"></iframe>
+
+	</div>
+
+<script>
+	function validateEmail() {
+		var emailContactForm = $('#email-contact-form');
+		var emailWarning = $("#email-warning");
+	    var v = emailContactForm.val();
+	    
+	    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+	    if (!regex.test(v)){
+	    	emailContactForm.css("background-color", "rgba(255, 99, 71, 0.4)");
+	    	emailWarning.css("display", "block");
+	    	return false;
+	    } else if (regex.test(v)) {
+	    	emailContactForm.css("background-color", "rgba(255, 255, 255, 1)");
+	    	emailWarning.css("display", "none");
+	    	return true;
+	    }
+
+	};
+	$('#email-contact-form').keyup(function() {
+	    validateEmail();
+	});
+
+
+    $("#submit-contact-form").on("click", function(event){
+    	var nameContactForm = $("#name-contact-form").val();
+    	var msgContactForm = $("#message-contact-form").val();
+    	event.preventDefault();
+    	event.stopPropagation();
+    	if (validateEmail() && nameContactForm && msgContactForm ) {
+    		console.log("Form submited");
+    		$("#input-form").submit();
+    		$('.form-control').val('');
+        	$('#input-feedback').text('Thank You!');
+    	} else if (!validateEmail() || !nameContactForm || !msgContactForm) {
+    		$('#input-feedback').text('You have to enter your name, valid email address and your message!');
+    		console.log("Form not submited");
+    		nameContactForm = '';
+    		msgContactForm = '';
+    	}
+    });
+
+    $("#submit-application-form").on("click", function(event){
+    	event.stopPropagation();
+    	event.preventDefault();
+    	var firstNameApplForm = $("#fname-appl-form").val();
+    	var lastNameApplForm = $("#lname-appl-form").val();
+    	var programChoosen = false;
+    	if ($("#summer").prop("checked") || $("#spring").prop("checked") || $("#fall").prop("checked") || $("#online").prop("checked") || $("#individual").prop("checked")) {
+    		programChoosen = true;
+    		console.log(programChoosen);
+    	}
+    	
+
+    	if (validateEmail() && firstNameApplForm && lastNameApplForm && programChoosen ) {
+    		console.log("Form submited" + " Name " + firstNameApplForm +" "+ lastNameApplForm + " Email valid " + validateEmail() + " program choosen " + programChoosen );
+    		$("#apply-form").submit();
+    		$('.form-check-input').val('');
+    		$( ".form-check-input" ).prop( "checked", false );
+    		$('.form-control').val('');
+        	$('#input-feedback').text('Thank You!');
+    	} else if (!validateEmail() || !firstNameApplForm || !lastNameApplForm || !programChoosen) {
+    		$('#input-feedback').text('You have to enter your name, valid email address and your message!');
+    		console.log("Form not submited");
+    		// firstNameApplForm = '';
+    		// lastNameApplForm = '';
+    		// programChoosen = '';
+    	}
+    	
+    });
+</script>
+
+</body>
+</html>
